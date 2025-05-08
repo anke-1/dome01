@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: demo-service
+  
+  # MySQL配置
+  datasource:
+    url: jdbc:mysql://117.73.12.78:30006/dome?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  
+  # Redis配置
+  redis:
+    host: 117.73.12.78
+    port: 30379
+    password: redis
+    database: 0
+  
+  # RabbitMQ配置
+  rabbitmq:
+    host: 117.73.12.78
+    port: 5672
+    username: rabbitmq
+    password: rabbitmq
+
+# 浪潮云OSS配置
+aliyun:
+  oss:
+    endpoint: oss-innet.cn-north-3.inspurcloudoss.com
+    accessKeyId: YjA3ZTZlYTEtYmM3Ny00NTNjLWIyOGQtZTg1ZmUyNGE3ZGE2
+    accessKeySecret: Njg5NjJjZTItNmY3NC00MmI2LWI5YzAtMjA0YmYxYjAyNTMz
+    bucketName: dome01 
