@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: education-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: your-registry.com/education-platform-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://117.73.12.78:30006/dome?useSSL=false&serverTimezone=UTC
+        - name: SPRING_DATASOURCE_USERNAME
+          value: root
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: root123
+        - name: SPRING_REDIS_HOST
+          value: 117.73.12.78
+        - name: SPRING_REDIS_PORT
+          value: "30379"
+        - name: SPRING_REDIS_PASSWORD
+          value: redis
+        - name: SPRING_RABBITMQ_HOST
+          value: 117.73.12.78
+        - name: SPRING_RABBITMQ_PORT
+          value: "31844"
+        - name: SPRING_RABBITMQ_USERNAME
+          value: rabbitmq
+        - name: SPRING_RABBITMQ_PASSWORD
+          value: rabbitmq
+        - name: OSS_ENDPOINT
+          value: oss-innet.cn-north-3.inspurcloudoss.com
+        - name: OSS_ACCESS_KEY
+          value: YjA3ZTZlYTEtYmM3Ny00NTNjLWIyOGQtZTg1ZmUyNGE3ZGE2
+        - name: OSS_SECRET_KEY
+          value: Njg5NjJjZTItNmY3NC00MmI2LWI5YzAtMjA0YmYxYjAyNTMz
+        - name: OSS_BUCKET_NAME
+          value: dome01
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: education-platform
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP 

@@ -2,31 +2,39 @@ package com.example.demo.entity;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "users")
-public class User implements Serializable {
+@Table(name = "lessons")
+public class Lesson {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String title;
+    
+    @Column(length = 1000)
+    private String description;
     
     @Column(nullable = false)
-    private String password;
+    private Integer orderNumber;
     
     @Column(nullable = false)
-    private String email;
-    
-    private String avatar;
+    private String videoUrl;
     
     @Column(nullable = false)
-    private String role;
+    private Integer duration; // in minutes
+    
+    @ManyToOne
+    @JoinColumn(name = "chapter_id", nullable = false)
+    private Chapter chapter;
+    
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    private List<Resource> resources;
     
     @Column(nullable = false)
     private LocalDateTime createdAt;

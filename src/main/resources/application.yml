@@ -7,7 +7,7 @@ spring:
   
   # MySQL配置
   datasource:
-    url: jdbc:mysql://117.73.12.78:30006/dome?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://117.73.12.78:30006/dome?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: root123
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,11 +15,12 @@ spring:
   # JPA配置
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
   
   # Redis配置
   redis:
@@ -31,7 +32,7 @@ spring:
   # RabbitMQ配置
   rabbitmq:
     host: 117.73.12.78
-    port: 5672
+    port: 31844
     username: rabbitmq
     password: rabbitmq
 

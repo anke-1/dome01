@@ -2,31 +2,32 @@ package com.example.demo.entity;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "users")
-public class User implements Serializable {
+@Table(name = "resources")
+public class Resource {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false)
+    private String title;
     
     @Column(nullable = false)
-    private String password;
+    private String fileUrl;
     
     @Column(nullable = false)
-    private String email;
-    
-    private String avatar;
+    private String fileType; // PDF, DOC, ZIP, etc.
     
     @Column(nullable = false)
-    private String role;
+    private Long fileSize; // in bytes
+    
+    @ManyToOne
+    @JoinColumn(name = "lesson_id", nullable = false)
+    private Lesson lesson;
     
     @Column(nullable = false)
     private LocalDateTime createdAt;
